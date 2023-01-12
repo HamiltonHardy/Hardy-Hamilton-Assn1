@@ -1,34 +1,59 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import { useEffect, useState } from 'react'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+async function GetRandQuote(){
+  const result =  await fetch("https://api.quotable.io/random");
+  // console.log(result.json())
+  return result.json();
+}
 
+
+export function App() {
+  const [response, setResponse] = useState({})
+  useEffect(() => {
+    GetRandQuote().then(data => setResponse(data))
+  }, [])
+  
+  console.log(response)
+  const sol = JSON.parse(JSON.stringify(response))
+  //For some reason I need to stringify and then reparse
   return (
-    <div className="App">
+    <div>
+      <h1>
+        Quote Search
+      </h1>
+      <input type = "text" placeholder='search'>
+      </input>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      {sol.content}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      <div>
+      -{sol.author}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+  </div>
   )
 }
 
-export default App
+
+// async function GetRandQuote(){
+//   const result =  await fetch("https://api.quotable.io/random");
+//   console.log(result.json())
+//   return result.json();
+// }
+
+// export function RandQuote(response:any){
+//   return <h2>
+//     {response[0]}
+//   </h2>
+// }
+
+// export function App() {
+//   const [response, setResponse] = useState({})
+//   setResponse(GetRandQuote())
+//   return (
+//     <div>
+//       Hello
+//       <RandQuote response={response}/>
+//     </div>
+//   )
+// }

@@ -68,3 +68,16 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* IMPORTANT!!! */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+}
+
+#root {
+  height: 100%;
+}

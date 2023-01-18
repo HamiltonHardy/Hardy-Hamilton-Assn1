@@ -3,12 +3,16 @@ import './App.css'
 import { SignUpPage } from './pages/SignUpPage';
 
 
-interface RandQuoteProps{
+interface QuoteProps{
   author: string,
   content: string
 }
 
-
+async function GetSearchQuote(search: string) {
+const result = await fetch("https://api.quotable.io/search/quotes?query=" + search + "&fields=author");
+console.log(result.json());
+return result.json()
+}
 
 
 async function GetRandQuote(){
@@ -18,7 +22,7 @@ async function GetRandQuote(){
 }
 
 
-export function RandQuote({author, content} : RandQuoteProps){
+export function RandQuote({author, content} : QuoteProps){
   return(
     <div>
       <p className='quote'>{content}</p>
@@ -27,52 +31,59 @@ export function RandQuote({author, content} : RandQuoteProps){
   )
 }
 
+export function ResultQuote({author, content}:QuoteProps ){
+  return(
+    <div className='card'>
+      <p className='quote'>{content}</p>
+      <p className='author'>-{author}</p>
+      </div>
+  )
+}
+
 
 export function App() {
-  const [response, setResponse] = useState({})
+  const [response, setResponse] = useState<null | QuoteProps>(null)
+  const [search, setSearch] = useState("")
+  const [pageState] = useState(Boolean)
   useEffect(() => {
     GetRandQuote().then(data => setResponse(data))
   }, [])
-  
-  const sol = JSON.parse(JSON.stringify(response))
+
+  // setResponse(GetSearchQuote("Obama"))
+  console.log(response)
   //For some reason I need to stringify and then reparse
   return (
-    <div>
+    <div className='mainpg'>
       <h1 className='quote'>
         Quote Search
       </h1>
       <label>
-        <input type = "text" placeholder='search'/>
+        <input type = "text" placeholder='search' onChange = {e => setSearch(e.target.value)} onKeyDown={(e) => {
+
+        }}/>
       </label>
-      <RandQuote author={sol.author} content={sol.content}/>
+      {response && <ResultQuote author={response.author} content={response.content}/> }
       <div>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
       </div>
-      
+      <div>
+        {
+
+        }
+      </div>
   </div>
   )
 }
 
 
-// async function GetRandQuote(){
-//   const result =  await fetch("https://api.quotable.io/random");
-//   console.log(result.json())
-//   return result.json();
-// }
+// input
+// onChange{ e => setDestription(e.target.value)}
 
-// export function RandQuote(response:any){
-//   return <h2>
-//     {response[0]}
-//   </h2>
-// }
+// onClick=(() => {
+//   for(let i=0; i<10; i++){
+//     setCount((current +))
+//   }
+// })
 
-// export function App() {
-//   const [response, setResponse] = useState({})
-//   setResponse(GetRandQuote())
-//   return (
-//     <div>
-//       Hello
-//       <RandQuote response={response}/>
-//     </div>
-//   )
-// }
+
+// <button onClick=(() => { serCount(count+1)})

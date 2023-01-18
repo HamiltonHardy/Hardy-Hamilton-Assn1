@@ -1,7 +1,9 @@
 
 .card {
-  padding: 2em;
-  border-radius: 5px;
+  background-color: antiquewhite;
+  padding: 1em;
+  margin: 10px;
+  border-radius: 20px;
 }
 
 .quote{
@@ -12,5 +14,13 @@
 .author{
   text-align: right;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.mainpg{
+  background-color: aqua;
+  height: 540pt;
+  width: 460pt;
+  border-radius: 10px;
+  text-align: center;
 }
 

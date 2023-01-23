@@ -9,14 +9,16 @@ interface QuoteProps{
 }
 
 async function GetSearchQuote(search: string) {
-const result = await fetch("https://api.quotable.io/search/quotes?query=" + search + "&fields=author");
-console.log(result.json());
+const request = "https://usu-quotes-mimic.vercel.app/api/search?query=" + search
+
+const result = await fetch(request);
+// console.log(result.json());
 return result.json()
 }
 
 
 async function GetRandQuote(){
-  const result =  await fetch("https://api.quotable.io/random");
+  const result =  await fetch("https://usu-quotes-mimic.vercel.app/api/random");
   // console.log(result.json())
   return result.json()
 }
@@ -40,15 +42,32 @@ export function ResultQuote({author, content}:QuoteProps ){
   )
 }
 
+// What type of variable should the state of the page that is renderd be?
 
 export function App() {
   const [response, setResponse] = useState<null | QuoteProps>(null)
+  const [searchResponse, setSearchResponse] = useState<null | QuoteProps>(null)
   const [search, setSearch] = useState("")
-  const [pageState] = useState(Boolean)
+  const [onSearch, setOnSearch] = useState(false)
+  const [pageState, setPageState] = useState(false)
+
+
   useEffect(() => {
     GetRandQuote().then(data => setResponse(data))
   }, [])
 
+  useEffect(() => {
+    GetSearchQuote(search).then(data => setSearchResponse(data))
+  }, [onSearch])
+
+
+  if(pageState){
+    return (
+      <div>
+      {searchResponse && <ResultQuote author={searchResponse.author} content={searchResponse.content}/>}
+    </div>
+    )
+  }else{
   // setResponse(GetSearchQuote("Obama"))
   console.log(response)
   //For some reason I need to stringify and then reparse
@@ -58,21 +77,25 @@ export function App() {
         Quote Search
       </h1>
       <label>
+        <input type="button" onClick={(c) => {
+          setOnSearch(!onSearch)
+          setPageState(true)
+        }}/>
         <input type = "text" placeholder='search' onChange = {e => setSearch(e.target.value)} onKeyDown={(e) => {
-
+          if(e.key === "Enter"){
+            e.preventDefault();
+            console.log("Hello")
+            setOnSearch(!onSearch)
+            setPageState(true)
+          }
         }}/>
       </label>
-      {response && <ResultQuote author={response.author} content={response.content}/> }
+      {response && <RandQuote author={response.author} content={response.content}/> }
       <div>
-    
-      </div>
-      <div>
-        {
-
-        }
       </div>
   </div>
   )
+}
 }
 
 

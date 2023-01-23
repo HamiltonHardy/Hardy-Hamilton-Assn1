@@ -1,5 +1,6 @@
 import{ ReactNode} from 'react'
-
+// Remember this UNIDIRECTIONAL DATA FLOW (declarative)
+// state -> view(ui) -> action back to state
 interface FormInputProps{
     type?: string
     // ? means that label COULD be undefined

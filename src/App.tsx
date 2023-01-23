@@ -8,6 +8,11 @@ interface QuoteProps{
   content: string
 }
 
+interface SearchQuoteProps{
+  results: [QuoteProps]
+}
+
+
 async function GetSearchQuote(search: string) {
 const request = "https://usu-quotes-mimic.vercel.app/api/search?query=" + search
 
@@ -46,7 +51,7 @@ export function ResultQuote({author, content}:QuoteProps ){
 
 export function App() {
   const [response, setResponse] = useState<null | QuoteProps>(null)
-  const [searchResponse, setSearchResponse] = useState<null | QuoteProps>(null)
+  const [searchResponse, setSearchResponse] = useState<null | [QuoteProps]>(null)
   const [search, setSearch] = useState("")
   const [onSearch, setOnSearch] = useState(false)
   const [pageState, setPageState] = useState(false)
@@ -57,14 +62,17 @@ export function App() {
   }, [])
 
   useEffect(() => {
-    GetSearchQuote(search).then(data => setSearchResponse(data))
+    GetSearchQuote(search).then(data => setSearchResponse(data.results))
   }, [onSearch])
 
 
   if(pageState){
     return (
       <div>
-      {searchResponse && <ResultQuote author={searchResponse.author} content={searchResponse.content}/>}
+        
+      <div>
+        {searchResponse && searchResponse.map(quoteProp => (<ResultQuote author={quoteProp.author} content={quoteProp.content}/>))}
+    </div>
     </div>
     )
   }else{

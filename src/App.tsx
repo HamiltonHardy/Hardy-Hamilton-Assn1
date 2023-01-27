@@ -8,30 +8,19 @@ interface QuoteProps{
   content: string
 }
 
-interface SearchQuoteProps{
-  results: [QuoteProps]
-}
-
-
 async function GetSearchQuote(search: string) {
-const request = "https://usu-quotes-mimic.vercel.app/api/search?query=" + search
-
-const result = await fetch(request);
-// console.log(result.json());
-return result.json()
+return (await fetch("https://usu-quotes-mimic.vercel.app/api/search?query=" + search)).json()
 }
 
 
 async function GetRandQuote(){
-  const result =  await fetch("https://usu-quotes-mimic.vercel.app/api/random");
-  // console.log(result.json())
-  return result.json()
+  return (await fetch("https://usu-quotes-mimic.vercel.app/api/random")).json()
 }
 
 
 export function RandQuote({author, content} : QuoteProps){
   return(
-    <div>
+    <div className='randQuote'>
       <p className='quote'>{content}</p>
       <p className='author'>-{author}</p>
       </div>
@@ -46,8 +35,6 @@ export function ResultQuote({author, content}:QuoteProps ){
       </div>
   )
 }
-
-// What type of variable should the state of the page that is renderd be?
 
 export function App() {
   const [response, setResponse] = useState<null | QuoteProps>(null)
@@ -68,8 +55,23 @@ export function App() {
 
   if(pageState){
     return (
-      <div>
+      <div className='mainpg'>
         
+      <label className='search'>
+        <input value = {search} type = "text" placeholder='search' onChange = {e => setSearch(e.target.value)} onKeyDown={(e) => {
+          if(e.key === "Enter"){
+            e.preventDefault();
+            setOnSearch(!onSearch)
+            setPageState(true)
+          }
+        }}/>
+        <button type="submit"><span className="material-symbols-outlined" onClick={(c) => {
+          setOnSearch(!onSearch)
+          setPageState(true)
+        }}>
+  search
+</span></button>
+      </label>
       <div>
         {searchResponse && searchResponse.map(quoteProp => (<ResultQuote author={quoteProp.author} content={quoteProp.content}/>))}
     </div>
@@ -84,12 +86,8 @@ export function App() {
       <h1 className='quote'>
         Quote Search
       </h1>
-      <label>
-        <input type="button" onClick={(c) => {
-          setOnSearch(!onSearch)
-          setPageState(true)
-        }}/>
-        <input type = "text" placeholder='search' onChange = {e => setSearch(e.target.value)} onKeyDown={(e) => {
+      <label className='search'>
+        <input value = {search} type = "text" placeholder='search' onChange = {e => setSearch(e.target.value)} onKeyDown={(e) => {
           if(e.key === "Enter"){
             e.preventDefault();
             console.log("Hello")
@@ -97,9 +95,15 @@ export function App() {
             setPageState(true)
           }
         }}/>
+          <button type="submit" className='searchButton'><span className="material-symbols-outlined" onClick={(c) => {
+          setOnSearch(!onSearch)
+          setPageState(true)
+        }}>
+  search
+</span></button>
       </label>
-      {response && <RandQuote author={response.author} content={response.content}/> }
       <div>
+      {response && <RandQuote author={response.author} content={response.content}/> }
       </div>
   </div>
   )

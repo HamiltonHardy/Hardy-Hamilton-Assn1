@@ -4,10 +4,12 @@
   padding: 1em;
   margin: 10px;
   border-radius: 20px;
+  border: 2px;
 }
 
 .quote{
   text-align: center; 
+  padding-top: 5px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -19,8 +21,35 @@
 .mainpg{
   background-color: aqua;
   height: 540pt;
-  width: 460pt;
+  width: auto;
   border-radius: 10px;
   text-align: center;
+  overflow-y: scroll;
 }
 
+
+.material-symbols-outlined {
+  height: min-content;
+  width: auto;
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
+
+
+.search{
+  height: min-content;
+  width: fit-content;
+  border-radius: 5px;
+}
+
+
+.randQuote{
+  margin: 10px;
+  padding: 10px;
+}
+/* #root{
+  text-align: center;
+} */

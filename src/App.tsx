@@ -78,9 +78,6 @@ export function App() {
     </div>
     )
   }else{
-  // setResponse(GetSearchQuote("Obama"))
-  console.log(response)
-  //For some reason I need to stringify and then reparse
   return (
     <div className='mainpg'>
       <h1 className='quote'>
@@ -110,16 +107,3 @@ export function App() {
   )
 }
 }
-
-
-// input
-// onChange{ e => setDestription(e.target.value)}
-
-// onClick=(() => {
-//   for(let i=0; i<10; i++){
-//     setCount((current +))
-//   }
-// })
-
-
-// <button onClick=(() => { serCount(count+1)})

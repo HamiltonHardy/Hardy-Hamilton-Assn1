@@ -20,8 +20,8 @@
 
 .mainpg{
   background-color: aqua;
-  height: 540pt;
-  width: auto;
+  height: 700px;
+  width: clamp(400px, 50% 500px);;
   border-radius: 10px;
   text-align: center;
   overflow-y: scroll;
@@ -40,15 +40,16 @@
 
 
 .search{
-  height: min-content;
-  width: fit-content;
   border-radius: 5px;
 }
 
 
 .randQuote{
-  margin: 10px;
-  padding: 10px;
+  margin: 5px;
+  padding: 20px;
+  border-style: solid;
+  border-radius: 5px;
+
 }
 /* #root{
   text-align: center;

@@ -57,8 +57,8 @@ export function App() {
     return (
       <div className='mainpg'>
         
-      <label className='search'>
-        <input value = {search} type = "text" placeholder='search' onChange = {e => setSearch(e.target.value)} onKeyDown={(e) => {
+      <label>
+        <input className='search' value = {search} type = "text" placeholder='search' onChange = {e => setSearch(e.target.value)} onKeyDown={(e) => {
           if(e.key === "Enter"){
             e.preventDefault();
             setOnSearch(!onSearch)
@@ -86,18 +86,19 @@ export function App() {
       <h1 className='quote'>
         Quote Search
       </h1>
-      <label className='search'>
-        <input value = {search} type = "text" placeholder='search' onChange = {e => setSearch(e.target.value)} onKeyDown={(e) => {
-          if(e.key === "Enter"){
+      <label>
+        <input className='search' value = {search} type = "text" placeholder='search' onChange = {e => setSearch(e.target.value)} onKeyDown={(e) => {
+          if(e.key === "Enter" && search != ""){
             e.preventDefault();
-            console.log("Hello")
             setOnSearch(!onSearch)
             setPageState(true)
           }
         }}/>
           <button type="submit" className='searchButton'><span className="material-symbols-outlined" onClick={(c) => {
+            if(search != ""){
           setOnSearch(!onSearch)
           setPageState(true)
+          }
         }}>
   search
 </span></button>
